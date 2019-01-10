@@ -1,0 +1,48 @@
+.recipeList {
+    list-style: none;
+}
+
+.ingredientContainer {
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-gap: 10px;
+    grid-template-rows: 4vh 5vh;
+    white-space: nowrap;
+    background-color: lightgray;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.gridItemA1 {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.gridItemA2 {
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.gridItemB1 {
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.gridItemB2 {
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+
+.gridItemC1 {
+    grid-column-start: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.gridItemC2 {
+    grid-column-start: 3;
+    grid-row-start: 2;
+    margin: auto;
+}

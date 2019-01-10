@@ -4,6 +4,8 @@ import recipe from "../constants/recipes";
 import { Store } from "../pockito/Store"
 import { Prompt } from "react-router-dom"
 
+import "../css/AddContainer.css"
+
 //import FileUpload from "./FileUpload";
 
 
@@ -40,7 +42,16 @@ export class AddForm extends Component {
 
     handleChange = (event) => {
         this.setState({ [event.target.name]: event.target.value, isBlocking: true })
-        console.log(`${event.target.name} = ${event.target.value}`)
+    }
+
+    //Makes checkbox true if undefined, otherwise switches between true and false
+    handleCheck = (event) => {
+        let checkboxtype = typeof this.state[event.target.name]
+        if (checkboxtype === "undefined") {
+            this.setState({ [event.target.name]: true, isBlocking: true })
+        } else {
+            this.setState({ [event.target.name]: !this.state[event.target.name], isBlocking: true })
+        }
     }
 
     handleIngredientLengthChange = (event) => {
@@ -49,12 +60,19 @@ export class AddForm extends Component {
 
     handleSubmit = () => {
         let IngredientArray = []
+        let IngredientAmountArray = []
+        let OptionalIngredientArray = []
         let documentReference = [ "Recipes", "nG0JRhJANmBc2NuEpdOz", "UserRecipes", Store["docID"] ]
         let recipeFromState = {}
 
         for (let i = 0; i < this.state.IngredientsLength; i++){
             let currentIngredient = this.state["Ingredient" + i]
+            let currentIngredientAmount = this.state["IngredientAmount" + i]
+            let currentOptionalIngredient = this.state["OptionalIngredient" + i]
+
             IngredientArray.push(currentIngredient)
+            IngredientAmountArray.push(currentIngredientAmount)
+            OptionalIngredientArray.push(currentOptionalIngredient)
         }
 
         recipeFromState = {
@@ -62,39 +80,72 @@ export class AddForm extends Component {
             Description: "",
             Author: "",
             Ingredients: IngredientArray,
-            IngredientsAmount: [],
+            IngredientsAmount: IngredientAmountArray,
             Steps: [],
             Time: 0,
             HasOptional: false,
-            OptionalIngredients: [],
+            OptionalIngredients: OptionalIngredientArray,
             OptionalSteps: []
         }
 
         firestore.updateStoreDataToFirestore(firestore.createFirestoreReference(documentReference), recipeFromState)
     }
 
+    deleteRecipe = () => {
+        let documentReference = [ "Recipes", "nG0JRhJANmBc2NuEpdOz", "UserRecipes", Store["docID"] ]
+        firestore.deleteFirestoreData(firestore.createFirestoreReference(documentReference))
+        Store.set({ ["recipeCreated"]: false })
+    }
+
     render() {
+
         const recipeCreated = Store["recipeCreated"]
         let IngredientsList;
-        let IngredientsAmountList;
-        let OptionalIngredientsList;
 
         if (this.state.IngredientsListRendered == false && recipeCreated == true){
-            
             IngredientsList = [];
-            IngredientsAmountList = [];
-            OptionalIngredientsList = [];
 
             for ( let i = 0; i < this.state.IngredientsLength; i++ ){
                 let ingredientID = "Ingredient" + i;
-                IngredientsList.push(<InputField inputname={ingredientID} inputtype={"text"} inputvalue={this.state[ingredientID]} inputchange={this.handleChange}/>);
                 let ingredientAmountID = "IngredientAmount" + i
-                IngredientsAmountList.push(<InputField inputname={ingredientAmountID} inputtype={"text"} inputvalue={this.state[ingredientAmountID]} inputchange={this.handleChange}/>);
                 let optionalIngredientID = "OptionalIngredient" + i
-                OptionalIngredientsList.push(<InputField inputname={optionalIngredientID} inputtype={"checkbox"} inputvalue={this.state[optionalIngredientID]} inputchange={this.handleChange}/>);
+                this.setState({ [optionalIngredientID]: false })
+
+                IngredientsList.push(
+                <li className="ingredientContainer">
+                    <InputField
+                        css={"gridItemA2"}
+                        textcss={"gridItemA1"}
+                        inputtext={"Amount"} 
+                        inputname={ingredientAmountID} 
+                        inputtype={"text"} 
+                        inputvalue={this.state[ingredientAmountID]} 
+                        inputchange={this.handleChange}
+                    />
+                    <InputField
+                        css={"gridItemB2"}
+                        textcss={"gridItemB1"}
+                        inputtext={"Ingredient"} 
+                        inputname={ingredientID} 
+                        inputtype={"text"} 
+                        inputvalue={this.state[ingredientID]} 
+                        inputchange={this.handleChange}
+                    />
+                    <InputField
+                        css={"gridItemC2"}
+                        textcss={"gridItemC1"}
+                        inputtext={"Optional?"}
+                        inputname={optionalIngredientID} 
+                        inputtype={"checkbox"} 
+                        inputvalue={this.state[optionalIngredientID]} 
+                        inputchange={this.handleCheck}                        
+                    />
+                </li>);
             }
-            this.setState({ IngredientsListRendered: true, IngredientsList: IngredientsList, IngredientsAmountList: IngredientsAmountList, OptionalIngredientsList: OptionalIngredientsList })
+            this.setState({ IngredientsListRendered: true, IngredientsList: IngredientsList })
         }
+
+        //console.log(this.state)
 
         if(recipeCreated){
             return (
@@ -113,13 +164,12 @@ export class AddForm extends Component {
                         value={this.state.IngredientsLength}
                         onChange={this.handleIngredientLengthChange}>
                     </input>
-                    {this.state.IngredientsList}
-                    {this.state.IngredientsAmountList}
-                    {this.state.OptionalIngredientsList}
+                    <ul className="recipeList">{this.state.IngredientsList}</ul>
                 </form>
                 <button onClick={this.handleSubmit}>
                     Test Ingredients Array
                 </button>
+                <button onClick={this.deleteRecipe}>Delete Recipe</button>
                 <Prompt when={this.state.isBlocking} message="Are you sure you want to leave this page?"/>
                 </React.Fragment>           
             )
@@ -131,9 +181,11 @@ export class AddForm extends Component {
 
 class InputField extends Component {
     render(){
+
         return (<React.Fragment>
-            <p>{this.props.inputname}</p>
-            <input name={this.props.inputname}
+            <p className={this.props.textcss}>{this.props.inputtext}</p>
+            <input className={this.props.css}
+                name={this.props.inputname}
                 type={this.props.inputtype}
                 value={this.props.inputvalue}
                 onChange={this.props.inputchange}>

@@ -3,9 +3,9 @@ import { firestore } from "../firebase/index";
 import { Store } from "../pockito/Store"
 import { withRouter } from "react-router-dom"
 
-class CreateRecipeButton extends Component {
+const CreateRecipeButton = (props) => {
 
-    newRecipe = ( event ) => {
+    let newRecipe = function(event) {
         const refArray = [ "Recipes", "nG0JRhJANmBc2NuEpdOz", "UserRecipes" ]
         const initRecipe = { RecipeName: "New Recipe", Description: "Edit to change content" }
         const firestoreRef = firestore.createFirestoreReference(refArray)
@@ -13,21 +13,19 @@ class CreateRecipeButton extends Component {
             Store.set({ ["recipeCreated"]: true })
         })
 
-        if(this.props.location.pathname !== "/add"){
+        if(props.location.pathname !== "/add"){
             console.log("Pushing /add to history")
-            this.props.history.push("/add")
+            props.history.push("/add")
         }
         
         event.preventDefault();
     }
 
-    render(){
-        return(
-            <div className="AddContainer">
-                <button onClick={this.newRecipe}>New Recipe</button>
-            </div>
-        )
-    }
+    return(
+        <div className="AddContainer">
+            <button onClick={newRecipe}>New Recipe</button>
+        </div>
+    )
 }
 
 export default withRouter(CreateRecipeButton);
