@@ -81,7 +81,7 @@ export class AddForm extends Component {
             Author: "",
             Ingredients: IngredientArray,
             IngredientsAmount: IngredientAmountArray,
-            Steps: [],
+            Steps: [{step: "Do this", optional: false}, {step: "Then this", optional: false}, {step: "And finally this", optional: false}],
             Time: 0,
             HasOptional: false,
             OptionalIngredients: OptionalIngredientArray,

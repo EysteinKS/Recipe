@@ -6,6 +6,7 @@
     "@firebase/storage": "^0.2.4",
     "firebase": "^5.7.2",
     "pockito": "^0.1.15",
+    "radium": "^0.25.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-firebase": "^2.2.8",

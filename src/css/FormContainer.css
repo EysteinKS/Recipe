@@ -1,0 +1,45 @@
+.ingredientGrid {
+    display: grid;
+    grid-template-columns: 40% 40% 20%;
+    grid-gap: 10px;
+    background-color: lightgray;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.stepGrid {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-gap: 10px;
+    background-color: lightgray;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.gridItemA {
+    grid-column-start: 1;
+
+}
+
+.gridItemB {
+    grid-column-start: 2;
+
+}
+
+.gridItemC {
+    grid-column-start: 3;
+
+}
+
+/*
+.ingredientContainer {
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-gap: 10px;
+    grid-template-rows: 4vh 5vh;
+    white-space: nowrap;
+    background-color: lightgray;
+    margin: 5px;
+    border-radius: 10px;
+}
+*/
