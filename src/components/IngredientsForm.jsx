@@ -64,25 +64,25 @@ const IngredientContainer = (props) => {
     return(
         <React.Fragment>
             <input
-            name="ingredientAmount"
-            type="text" 
-            value={props.ingredient.amount}
-            placeholder="Amount"
-            onChange={props.onChange}>
-            </input>
+                name="ingredientAmount"
+                type="text"
+                value={props.ingredient.amount}
+                placeholder="Amount"
+                onChange={props.onChange}
+            />
             <input
-            name="ingredientName"
-            type="text" 
-            value={props.ingredient.name}
-            placeholder="name"
-            onChange={props.onChange}>
-            </input>
+                name="ingredientName"
+                type="text"
+                value={props.ingredient.name}
+                placeholder="name"
+                onChange={props.onChange}
+            />
             <input
-            name="ingredientOptional"
-            type="checkbox"
-            value={props.ingredient.optional}
-            onChange={props.onChange}>
-            </input>
+                name="ingredientOptional"
+                type="checkbox"
+                value={props.ingredient.optional}
+                onChange={props.onChange}
+            />
         </React.Fragment>
     )
 }
