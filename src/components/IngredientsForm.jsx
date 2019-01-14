@@ -61,28 +61,30 @@ class IngredientsForm extends Component {
 }
 
 const IngredientContainer = (props) => {
+    const { ingredient, onChange } = props;
+
     return(
         <React.Fragment>
             <input
-            name="ingredientAmount"
-            type="text" 
-            value={props.ingredient.amount}
-            placeholder="Amount"
-            onChange={props.onChange}>
-            </input>
+                name="ingredientAmount"
+                type="text"
+                value={ingredient.amount}
+                placeholder="Amount"
+                onChange={(event) => onChange({ ...ingredient, amount: event.target.value })}
+            />
             <input
-            name="ingredientName"
-            type="text" 
-            value={props.ingredient.name}
-            placeholder="name"
-            onChange={props.onChange}>
-            </input>
+                name="ingredientName"
+                type="text"
+                value={ingredient.name}
+                placeholder="name"
+                onChange={(event) => onChange({ ...ingredient, name: event.target.value })}
+            />
             <input
-            name="ingredientOptional"
-            type="checkbox"
-            value={props.ingredient.optional}
-            onChange={props.onChange}>
-            </input>
+                name="ingredientOptional"
+                type="checkbox"
+                value={ingredient.optional}
+                onChange={(event) => onChange({ ...ingredient, optional: event.target.value })}
+            />
         </React.Fragment>
     )
 }

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { firestore } from "../firebase/index";
 import { Store } from "../pockito/Store"
 import { withRouter } from "react-router-dom"
@@ -10,7 +10,7 @@ const CreateRecipeButton = (props) => {
         const initRecipe = { RecipeName: "New Recipe", Description: "Edit to change content" }
         const firestoreRef = firestore.createFirestoreReference(refArray)
         firestore.addDocumentWithRandomID(firestoreRef, initRecipe, "Store", "docID").then(() => { 
-            Store.set({ ["recipeCreated"]: true })
+            Store.set({ recipeCreated: true })
         })
 
         if(props.location.pathname !== "/add"){

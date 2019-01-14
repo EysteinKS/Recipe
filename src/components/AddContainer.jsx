@@ -94,15 +94,15 @@ export class AddForm extends Component {
     deleteRecipe = () => {
         let documentReference = [ "Recipes", "nG0JRhJANmBc2NuEpdOz", "UserRecipes", Store["docID"] ]
         firestore.deleteFirestoreData(firestore.createFirestoreReference(documentReference))
-        Store.set({ ["recipeCreated"]: false })
+        Store.set({ recipeCreated: false })
     }
 
     render() {
 
-        const recipeCreated = Store["recipeCreated"]
+        const recipeCreated = Store.recipeCreated;
         let IngredientsList;
 
-        if (this.state.IngredientsListRendered == false && recipeCreated == true){
+        if (this.state.IngredientsListRendered === false && recipeCreated === true){
             IngredientsList = [];
 
             for ( let i = 0; i < this.state.IngredientsLength; i++ ){
