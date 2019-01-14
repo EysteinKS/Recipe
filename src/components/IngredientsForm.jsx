@@ -68,20 +68,20 @@ const IngredientContainer = (props) => {
                 type="text"
                 value={props.ingredient.amount}
                 placeholder="Amount"
-                onChange={props.onChange}
+                onChange={(event) => props.onChange({ ...props.ingredient, amount: event.target.value })}
             />
             <input
                 name="ingredientName"
                 type="text"
                 value={props.ingredient.name}
                 placeholder="name"
-                onChange={props.onChange}
+                onChange={(event) => props.onChange({ ...props.ingredient, name: event.target.value })}
             />
             <input
                 name="ingredientOptional"
                 type="checkbox"
                 value={props.ingredient.optional}
-                onChange={props.onChange}
+                onChange={(event) => props.onChange({ ...props.ingredient, optional: event.target.value })}
             />
         </React.Fragment>
     )
