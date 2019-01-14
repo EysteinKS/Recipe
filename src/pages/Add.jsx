@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CreateRecipeButton from "../components/CreateRecipeButton"
 import { AddForm } from "../components/AddContainer"
+import IngredientsForm from "../components/IngredientsForm"
 
 class Add extends Component {
     render(){
@@ -9,6 +10,7 @@ class Add extends Component {
                 <h1>Add</h1>
                 <CreateRecipeButton/>
                 <AddForm/>
+                <IngredientsForm/>
             </div>
         )
     }
