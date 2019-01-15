@@ -10,6 +10,7 @@ const CreateRecipeButton = (props) => {
         const initRecipe = { RecipeName: "New Recipe", Description: "Edit to change content" }
         const firestoreRef = firestore.createFirestoreReference(refArray)
         firestore.addDocumentWithRandomID(firestoreRef, initRecipe, "Store", "docID").then(() => { 
+            firestore.updateUserRecipes(Store["docID"], "New Recipe")
             Store.set({ recipeCreated: true })
         })
 

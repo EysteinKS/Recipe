@@ -1,15 +1,13 @@
 import { firestore } from "./firebase";
-import { Store } from "../pockito/Store";
+import { Store, UserStore } from "../pockito/Store";
 
 export const createFirestoreReference = ( arr ) => {
 
-    console.log("Creating Firestore Reference...")
     let reference = arr.join("/")
     return reference
 }
 
 export const getFirestoreDataToStore = ( refString, getVariable, storeRef, storeKey ) => {
-    console.log("Getting Firestore data")
 
     firestore.doc(refString).get()
         .then((docRef) => {
@@ -21,7 +19,6 @@ export const getFirestoreDataToStore = ( refString, getVariable, storeRef, store
             } else {
                 setStoreData( storeRef, getVariable, thisVariable )
             }
-            console.log(`Imported ${getVariable} from ${refString} to ${storeRef}`)
         })
         
         .catch((error) => console.log(`Error while importing ${getVariable} from ${refString}:`, error))
@@ -38,11 +35,9 @@ export const addDocumentWithRandomID = ( refString, getData, storeRef, storeKey 
 
     firestore.collection(refString).add(getData)
         .then((docRef) => { 
-            console.log(`Added ${getData} to ${refString} with docID${docRef.id}`)
             documentRef = docRef.id
             resolve(documentRef)
             setStoreData( storeRef, storeKey, docRef.id)
-            console.log(`Saved ${docRef.id} to ${storeRef} with key ${storeKey}`)
 
         })
         .catch((error) => console.log("Error adding document with Random ID", error))
@@ -70,12 +65,10 @@ export const addListenerToFirestore = (refString, getVariable, storeRef, storeKe
 
 export const removeListenerFromFirestore = (refString) => {
     firestore.doc(refString).onSnapshot((docRef) => {})
-    console.log(`Listener to ${refString} removed`)
 }
 
 export const deleteFirestoreData = (refString) => {
     firestore.doc(refString).delete()
-        .then(() => {console.log("Deleted", refString)})
 }
 
 export const setStoreData = ( storeRef, storeKey, newData ) => {
@@ -103,4 +96,30 @@ export const getStoreData = ( storeRef, storeKey) => {
             console.log("Error, didn't find storeRef case in getStoreData switch")
             break;
     }
+}
+
+//CHANGING USER INFO
+
+export const updateUserRecipes = (newRecipeID, newRecipeName) => {
+    let currentRecipes = UserStore["recipes"]
+    let currentUser = UserStore["uid"]
+    let documentReference = ["Users", currentUser]
+    let newRecipe = { docID: newRecipeID, recipeName: newRecipeName }
+    let objectToSave = { ...currentRecipes, [newRecipeID]: newRecipe }
+    updateStoreDataToFirestore(createFirestoreReference(documentReference), {recipes: objectToSave})
+    UserStore.set({ recipes: objectToSave })
+}
+
+export const removeUserRecipe = (recipeID) => {
+    let currentRecipes = UserStore["recipes"]
+    let currentUser = UserStore["uid"]
+    let documentReference = ["Users", currentUser]
+    let recipesWithoutID = removeKeyFromObject(currentRecipes, recipeID)
+    updateStoreDataToFirestore(createFirestoreReference(documentReference), {recipes: recipesWithoutID})
+    UserStore.set({ recipes: recipesWithoutID })
+}
+
+const removeKeyFromObject = (obj, prop) => {
+    let {[prop]: omit, ...res} = obj
+    return res
 }

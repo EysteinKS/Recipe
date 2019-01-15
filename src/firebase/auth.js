@@ -32,7 +32,7 @@ export const doCreateUser = (userid, username, email) => new Promise((resolve) =
   firestore.collection("Users").doc(userid).set({
     username: username,
     permission: "User",
-    recipes: [],
+    recipes: {},
     email: email
   }).then(() => {resolve()})
 })

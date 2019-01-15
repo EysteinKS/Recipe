@@ -101,11 +101,13 @@ class FormContainer extends Component {
         }
 
         firestore.updateStoreDataToFirestore(firestore.createFirestoreReference(documentReference), recipeFromState)
+        firestore.updateUserRecipes(Store["docID"], this.state.recipeName)
     }
 
     deleteRecipe = () => {
-        let documentReference = [ "Recipes", "nG0JRhJANmBc2NuEpdOz", "UserRecipes", Store["docID"] ]
+        let documentReference = [ "Recipes", UserStore["uid"], "UserRecipes", Store["docID"] ]
         firestore.deleteFirestoreData(firestore.createFirestoreReference(documentReference))
+        firestore.removeUserRecipe(Store["docID"])
         Store.set({ recipeCreated: false })
     }
   
