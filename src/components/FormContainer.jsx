@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { firestore } from "../firebase/index";
-import { Store } from "../pockito/Store";
+import { Store, UserStore } from "../pockito/Store";
 import { Prompt } from "react-router-dom";
 
 import "../css/FormContainer.css"
@@ -20,6 +20,7 @@ class FormContainer extends Component {
     constructor(props){
         super(props)
         Store.addListener(this.onStoreChange)
+        UserStore.addListener(this.onStoreChange)
 
         this.state = {
             ingredients: [],
@@ -36,6 +37,7 @@ class FormContainer extends Component {
 
     componentWillUnmount() {
         Store.removeListener(this.onStoreChange)
+        UserStore.removeListener(this.onStoreChange)
     }
 
     handleChange = (event) => {
@@ -88,7 +90,7 @@ class FormContainer extends Component {
     }
 
     handleSubmit = () => {
-        let documentReference = [ "Recipes", "nG0JRhJANmBc2NuEpdOz", "UserRecipes", Store["docID"] ]
+        let documentReference = [ "Recipes", UserStore["uid"], "UserRecipes", Store["docID"] ]
         let recipeFromState = {
             RecipeName: this.state.recipeName,
             Description: this.state.description,
@@ -108,9 +110,6 @@ class FormContainer extends Component {
     }
   
     render() {
-
-        console.log(this.state)
-
         return (
             <div>
                 <p>{Store["docID"]}</p>

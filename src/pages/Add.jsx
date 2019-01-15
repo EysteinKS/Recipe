@@ -10,7 +10,10 @@ const styles = {
         background: COLORS.LightGray
     },
     light: {
-        background: COLORS.Platinum
+        background: COLORS.Platinum,
+        height: "100%",
+        width: "100%",
+        
     },
     gridContainer: {
         display: "grid",
@@ -18,7 +21,7 @@ const styles = {
     },
     gridItem: {
         gridColumnStart: 2
-    }
+    },
 }
 
 class Add extends Component {
@@ -37,9 +40,9 @@ class Add extends Component {
 
     render(){
         return(
-            <div style={[styles.gridContainer, styles.base]}>
-                <h1 style={styles.gridItem}>Add</h1>
-                <section style={[styles.light, styles.gridItem]}>
+            <div key="1" style={[styles.gridContainer, styles.base]}>
+                <section key="2" style={[styles.light, styles.gridItem]}>
+                    <h1>Add</h1>
                     {Store["recipeCreated"] ? <FormContainer/> : <p>Click to create a new recipe</p> }
                     <CreateRecipeButton/>
                 </section>

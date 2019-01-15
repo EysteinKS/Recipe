@@ -1,12 +1,12 @@
 import React from "react";
 import { firestore } from "../firebase/index";
-import { Store } from "../pockito/Store"
+import { Store, UserStore } from "../pockito/Store"
 import { withRouter } from "react-router-dom"
 
 const CreateRecipeButton = (props) => {
 
     let newRecipe = function(event) {
-        const refArray = [ "Recipes", "nG0JRhJANmBc2NuEpdOz", "UserRecipes" ]
+        const refArray = [ "Recipes", UserStore["uid"], "UserRecipes" ]
         const initRecipe = { RecipeName: "New Recipe", Description: "Edit to change content" }
         const firestoreRef = firestore.createFirestoreReference(refArray)
         firestore.addDocumentWithRandomID(firestoreRef, initRecipe, "Store", "docID").then(() => { 

@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import * as routes from "../constants/routes";
+import Radium from "radium"
+import COLORS from "../css/DefaultColors"
+
+const styles = {
+    base: {
+        backgroundColor: COLORS.MiddleGreen
+    }
+}
 
 class Navigation extends Component {
     render(){
         return(
-            <header>
+            <header style={styles.base}>
                 <ul>
                     <li><Link to={routes.HOME}>Home</Link></li>
                     <li><Link to={routes.PROFILE}>Profile</Link></li>
@@ -17,4 +25,4 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+export default Radium(Navigation);
