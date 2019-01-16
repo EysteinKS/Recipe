@@ -13,8 +13,6 @@ import PasswordForget from "./components/auth/PasswordForget";
 import * as routes from "./constants/routes";
 
 import withAuthentication from "./components/auth/withAuthentication"
-import { UserStore } from "./pockito/Store"
-import { auth } from "./firebase/index"
 
 import Radium from "radium";
 import COLORS from "./css/DefaultColors"
@@ -26,12 +24,7 @@ const styles = {
   }
 }
 
-const App = ({ authUser }) => {
-
-  if( authUser && UserStore["userLoaded"] === false ) {
-    console.log("Loading user info from App.js")
-    auth.loadCurrentUserToStore().then(() => { UserStore.set({ userLoaded: true }) })
-  }
+const App = () => {
 
   return (
     <BrowserRouter>

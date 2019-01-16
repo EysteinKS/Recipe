@@ -4,7 +4,7 @@ import { Listenable } from "pockito";
 export const Store = new Listenable({
     initialState: {
         recipeCreated: false,
-        docID: ""
+        docID: "",
     }
 })
 
@@ -13,8 +13,9 @@ export const UserStore = new Listenable({
     initialState: {
         username: "",
         permission: "",
-        recipes: [],
+        recipes: {},
         uid: "",
-        userLoaded: false
+        userLoaded: false,
+        isLoggedIn: false
     }
 })

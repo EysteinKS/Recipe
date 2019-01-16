@@ -123,3 +123,14 @@ const removeKeyFromObject = (obj, prop) => {
     let {[prop]: omit, ...res} = obj
     return res
 }
+
+//RECIPES
+
+const loadRecipeFromFirestore = (recipeOwner, recipeID) => {
+    let documentReference = createFirestoreReference([ "Recipes", recipeOwner, "UserRecipes", recipeID ])
+    firestore.doc(documentReference).get()
+        .then((snapshot)=> {
+            let docData = snapshot.data()
+            
+        })
+}

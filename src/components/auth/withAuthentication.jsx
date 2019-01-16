@@ -1,7 +1,8 @@
 import React from 'react';
 
 import AuthUserContext from "./AuthUserContext";
-import { firebase } from "../../firebase/index";
+import { firebase, auth } from "../../firebase/index";
+import { UserStore } from "../../pockito/Store";
 
 const withAuthentication = (Component) => {
     
@@ -15,9 +16,17 @@ const withAuthentication = (Component) => {
     
         componentDidMount() {
             firebase.auth.onAuthStateChanged(authUser => {
-                authUser
-                    ? this.setState(() => ({ authUser }))
-                    : this.setState(() => ({ authUser: null }));
+                if (authUser){
+                    this.setState(() => ({ authUser }))
+                    if(UserStore["userLoaded"] === false){
+                        auth.loadCurrentUserToStore().then(() => { UserStore.set({ userLoaded: true }) })
+                        console.log("Getting User data from Firestore")
+                    }
+                    UserStore.set({ isLoggedIn: true })
+                } else {
+                    this.setState(() => ({ authUser: null }))
+                    UserStore.set({ isLoggedIn: false })
+                }
             });
         }    
 
