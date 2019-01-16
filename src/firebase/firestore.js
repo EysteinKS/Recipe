@@ -126,11 +126,19 @@ const removeKeyFromObject = (obj, prop) => {
 
 //RECIPES
 
-const loadRecipeFromFirestore = (recipeOwner, recipeID) => {
+export const loadRecipeFromFirestore = (recipeOwner, recipeID) => {
     let documentReference = createFirestoreReference([ "Recipes", recipeOwner, "UserRecipes", recipeID ])
     firestore.doc(documentReference).get()
         .then((snapshot)=> {
             let docData = snapshot.data()
-            
+            Store.set({
+                recipeName: docData.RecipeName,
+                author: docData.Author,
+                description: docData.Description,
+                time: docData.Time,
+                ingredients: docData.Ingredients,
+                steps: docData.Steps
+            })
         })
+        .catch((error) => console.log(error))
 }

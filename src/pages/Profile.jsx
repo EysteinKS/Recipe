@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { UserStore } from "../pockito/Store";
 import AuthUserContext from "../components/auth/AuthUserContext";
 import SignIn from "../components/auth/SignIn"
+import SignOutButton from "../components/auth/SignOut"
 
 class Profile extends Component {
     constructor(props){
@@ -32,17 +33,16 @@ class Profile extends Component {
 }
 
 const AuthProfile = () => {
-    const list = recipeList()
 
     return(
         <React.Fragment>
             <p>Username: {UserStore["username"]}</p>
-            {list}
+            <SignOutButton/>
         </React.Fragment>
     )
 }
 
-const recipeList = () => {
+/*const recipeList = () => {
     let list = []
     let obj = UserStore["recipes"]
 
@@ -51,6 +51,6 @@ const recipeList = () => {
         list.push(<p>{name}</p>)
     }
     return list
-}
+}*/
 
 export default Profile;

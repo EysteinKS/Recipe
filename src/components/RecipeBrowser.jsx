@@ -12,6 +12,7 @@ Filter by tag
 import React, { Component } from "react"
 import { Store } from "../pockito/Store"
 import { UserStore } from "../pockito/Store"
+import { firestore } from "../firebase/index"
 
 const INITIAL_STATE = {
     view: "dropdown",
@@ -45,11 +46,19 @@ class RecipeBrowser extends Component {
         changeActiveRecipe(event.target.value)
     }
 
+    onLoadRecipe = () => {
+        firestore.loadRecipeFromFirestore(UserStore["uid"], this.state.currentRecipe)
+    }
+
+    deleteRecipe = () => {
+        let documentReference = [ "Recipes", UserStore["uid"], "UserRecipes", Store["docID"] ]
+        firestore.deleteFirestoreData(firestore.createFirestoreReference(documentReference))
+        firestore.removeUserRecipe(Store["docID"])
+    }
+
     render(){
 
         let browserView;
-        console.log(this.state)
-        console.log(Store["docID"])
 
         switch(this.state.view){
             case("cards"):
@@ -65,7 +74,9 @@ class RecipeBrowser extends Component {
         return(
             <section>
                 {browserView}
-                <p>{this.state.currentRecipe}</p>
+                <br/>
+                <button onClick={this.onLoadRecipe}>Load Recipe</button>
+                <button onClick={this.deleteRecipe}>Delete Recipe</button>
             </section>
         )
     }
@@ -83,6 +94,7 @@ const RecipeDropdown = props => {
 
     return(
         <select value={props.value} onChange={props.onChange}>
+            <option value={null} selected>Select a recipe</option>
             {recipeArray.map((recipe) => 
                 <option value={recipe.docID}>{recipe.recipeName}</option>
             )}
