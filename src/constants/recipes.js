@@ -3,13 +3,11 @@ const recipe = {
     RecipeName: "",
     Description: "",
     Ingredients: [],
-    IngredientsAmount: [],
     Steps: [],
     Time: 0,
     ImageUrl: "",
     HasOptional: false,
-    OptionalIngredients: [],
-    OptionalSteps: []
+    Public: true
 }
 
 export default recipe;

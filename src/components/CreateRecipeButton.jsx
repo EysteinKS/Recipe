@@ -1,23 +1,18 @@
 import React from "react";
 import { firestore } from "../firebase/index";
 import { Store, UserStore } from "../pockito/Store"
-import { withRouter } from "react-router-dom"
+import recipe from "../constants/recipes"
 
-const CreateRecipeButton = (props) => {
+const CreateRecipeButton = () => {
 
     let newRecipe = function(event) {
         const refArray = [ "Recipes", UserStore["uid"], "UserRecipes" ]
-        const initRecipe = { RecipeName: "New Recipe", Description: "Edit to change content" }
+        const initRecipe = recipe
         const firestoreRef = firestore.createFirestoreReference(refArray)
         firestore.addDocumentWithRandomID(firestoreRef, initRecipe, "Store", "docID").then(() => { 
             firestore.updateUserRecipes(Store["docID"], "New Recipe")
-            Store.set({ recipeCreated: true })
+            Store.set({ recipeCreated: true, showEditor: true })
         })
-
-        if(props.location.pathname !== "/add"){
-            console.log("Pushing /add to history")
-            props.history.push("/add")
-        }
         
         event.preventDefault();
     }
@@ -29,4 +24,4 @@ const CreateRecipeButton = (props) => {
     )
 }
 
-export default withRouter(CreateRecipeButton);
+export default CreateRecipeButton

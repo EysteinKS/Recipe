@@ -42,8 +42,7 @@ class Add extends Component {
         return(
             <div key="1" style={[styles.gridContainer, styles.base]}>
                 <section key="2" style={[styles.light, styles.gridItem]}>
-                    <h1>Add</h1>
-                    {Store["recipeCreated"] ? <FormContainer/> : <p>Click to create a new recipe</p> }
+                    {Store["recipeCreated"] ? <FormContainer/> : <p>No recipe loaded</p> }
                     <CreateRecipeButton/>
                 </section>
             </div>

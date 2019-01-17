@@ -94,7 +94,7 @@ class FormContainer extends Component {
         let recipeFromState = {
             RecipeName: this.state.recipeName,
             Description: this.state.description,
-            Author: "Test",
+            Author: UserStore["username"],
             Ingredients: this.state.ingredients,
             Steps: this.state.steps,
             Time: 0,
@@ -114,7 +114,6 @@ class FormContainer extends Component {
     render() {
         return (
             <div>
-                <p>{Store["docID"]}</p>
                 <input 
                     name="recipeName"
                     type="text"

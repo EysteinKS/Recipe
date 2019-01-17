@@ -48,6 +48,7 @@ class RecipeBrowser extends Component {
 
     onLoadRecipe = () => {
         firestore.loadRecipeFromFirestore(UserStore["uid"], this.state.currentRecipe)
+        Store.set({ showViewer: true })
     }
 
     deleteRecipe = () => {
